@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đếm tiền</title>
+    <script src="https://cdn.tailwindcss.org"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { 
+            background-color: #f1f5f9; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+        }
+        .denom-input:focus {
+            outline: none;
+            background-color: #ffffff;
+        }
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        @media (min-width: 480px) {
+            .grid-layout { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body class="pb-44">
+
+    <!-- Header -->
+    <header class="bg-white/70 backdrop-blur-md sticky top-0 z-30 border-b border-slate-200">
+        <div class="max-w-md mx-auto p-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-xl font-extrabold text-slate-900 tracking-tight">Smart Cash</h1>
+                <p class="text-[9px] text-blue-600 font-bold uppercase tracking-widest"></p>
+            </div>
+            <button onclick="resetAll()" class="p-2 text-slate-400 hover:text-red-500 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto p-4">
+        <!-- Grid Mệnh Giá -->
+        <div id="cash-grid" class="grid-layout mb-6">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Floating Button -->
+        <div class="fixed bottom-32 right-4 z-40">
+            <button onclick="toggleModal(true)" class="bg-blue-600 hover:bg-blue-700 text-white shadow-2xl shadow-blue-300 w-16 h-16 rounded-2xl flex items-center justify-center transition-all active:scale-90">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Modal Giao Dịch -->
+        <div id="modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+            <div class="bg-white w-full max-w-sm rounded-[2rem] shadow-2xl overflow-hidden animate-in zoom-in duration-200">
+                <div class="p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-extrabold text-slate-800">Thanh toán nhanh</h2>
+                        <button onclick="toggleModal(false)" class="text-slate-400 hover:text-slate-600">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tổng Bill (k)</label>
+                            <input type="number" id="bill" placeholder="Ví dụ: 22" class="w-full mt-1 p-4 bg-slate-50 rounded-2xl text-2xl font-bold focus:ring-4 focus:ring-blue-100 transition-all border-none">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Khách đưa (k)</label>
+                            <input type="number" id="pay" placeholder="Ví dụ: 50" oninput="liveCalculate()" class="w-full mt-1 p-4 bg-slate-50 rounded-2xl text-2xl font-bold focus:ring-4 focus:ring-blue-100 transition-all border-none">
+                        </div>
+
+                        <div id="change-box" class="hidden p-5 bg-blue-600 rounded-[1.5rem] text-white">
+                            <p class="text-xs font-semibold opacity-80 mb-1">Tiền cần thối</p>
+                            <p id="change-val" class="text-3xl font-black mb-3">0đ</p>
+                            <div id="change-labels" class="flex flex-wrap gap-2"></div>
+                        </div>
+                    </div>
+
+                    <button id="confirm-btn" onclick="applyAndClose()" disabled class="w-full mt-8 py-4 bg-slate-100 text-slate-400 rounded-2xl font-extrabold transition-all">Xác nhận & Cập nhật két</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Bar -->
+    <footer class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 p-6 z-30">
+        <div class="max-w-md mx-auto flex justify-between items-center">
+            <div>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Tổng cộng trong két</p>
+                <h2 id="total-text" class="text-3xl font-black text-slate-900">0đ</h2>
+            </div>
+            <button onclick="copyReport()" class="bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-2xl shadow-lg shadow-blue-200 flex items-center justify-center transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        const denoms = [500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000, 500];
+        let counts = {};
+        let suggestion = null;
+
+        function init() {
+            const grid = document.getElementById('cash-grid');
+            denoms.forEach(v => {
+                counts[v] = 0;
+                const div = document.createElement('div');
+                div.className = "bg-white p-4 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all";
+                div.innerHTML = `
+                    <p class="text-[10px] font-black text-slate-400 uppercase mb-1">${v >= 1000 ? v/1000+'k' : v}</p>
+                    <input type="number" id="in-${v}" placeholder="0" oninput="update(${v}, this.value)" 
+                        class="denom-input w-full bg-transparent text-xl font-black text-slate-800 border-none p-0">
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function update(v, val) {
+            counts[v] = parseInt(val) || 0;
+            calcTotal();
+        }
+
+        function calcTotal() {
+            let t = 0;
+            denoms.forEach(v => t += v * counts[v]);
+            document.getElementById('total-text').textContent = t.toLocaleString('vi-VN') + 'đ';
+        }
+
+        function toggleModal(show) {
+            const m = document.getElementById('modal');
+            m.classList.toggle('hidden', !show);
+            m.classList.toggle('flex', show);
+            if(show) document.getElementById('bill').focus();
+        }
+
+        function liveCalculate() {
+            const bill = (parseInt(document.getElementById('bill').value) || 0) * 1000;
+            const pay = (parseInt(document.getElementById('pay').value) || 0) * 1000;
+            const box = document.getElementById('change-box');
+            const btn = document.getElementById('confirm-btn');
+
+            if (pay >= bill && bill > 0) {
+                let diff = pay - bill;
+                document.getElementById('change-val').textContent = diff.toLocaleString('vi-VN') + 'đ';
+                
+                // Thuật toán tính tờ tiền
+                let temp = diff;
+                let res = {};
+                denoms.forEach(d => {
+                    if (temp >= d) {
+                        let n = Math.floor(temp / d);
+                        res[d] = n;
+                        temp -= n * d;
+                    }
+                });
+
+                suggestion = { added: pay, removed: res };
+                
+                // Hiển thị nhãn tờ tiền
+                const labelContainer = document.getElementById('change-labels');
+                labelContainer.innerHTML = '';
+                Object.entries(res).forEach(([d, q]) => {
+                    const s = document.createElement('span');
+                    s.className = "bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold";
+                    s.textContent = `${parseInt(d) >= 1000 ? d/1000+'k' : d} x ${q}`;
+                    labelContainer.appendChild(s);
+                });
+
+                box.classList.remove('hidden');
+                btn.disabled = false;
+                btn.className = "w-full mt-8 py-4 bg-green-500 text-white rounded-2xl font-extrabold shadow-lg shadow-green-200 transition-all active:scale-95";
+            } else {
+                box.classList.add('hidden');
+                btn.disabled = true;
+                btn.className = "w-full mt-8 py-4 bg-slate-100 text-slate-400 rounded-2xl font-extrabold";
+            }
+        }
+
+        function applyAndClose() {
+            if(!suggestion) return;
+            
+            // Cộng tiền khách đưa
+            if (counts.hasOwnProperty(suggestion.added)) {
+                counts[suggestion.added]++;
+                document.getElementById(`in-${suggestion.added}`).value = counts[suggestion.added];
+            }
+            
+            // Trừ tiền thối
+            Object.entries(suggestion.removed).forEach(([d, q]) => {
+                counts[d] = Math.max(0, counts[d] - q);
+                document.getElementById(`in-${d}`).value = counts[d] || '';
+            });
+
+            calcTotal();
+            toggleModal(false);
+            // Reset input modal
+            document.getElementById('bill').value = '';
+            document.getElementById('pay').value = '';
+        }
+
+        function resetAll() {
+            if(confirm("Xóa hết để đếm lại từ đầu?")) {
+                denoms.forEach(v => {
+                    counts[v] = 0;
+                    document.getElementById(`in-${v}`).value = '';
+                });
+                calcTotal();
+            }
+        }
+
+        function copyReport() {
+            let t = document.getElementById('total-text').textContent;
+            let detail = `💰 BÁO CÁO KẾT CA\n`;
+            denoms.forEach(v => { if(counts[v]>0) detail += `• ${v.toLocaleString()}đ: ${counts[v]} tờ\n`; });
+            detail += `👉 TỔNG: ${t}`;
+            
+            navigator.clipboard.writeText(detail).then(() => alert("Đã copy báo cáo!"));
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
