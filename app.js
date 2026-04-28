@@ -5,7 +5,7 @@ const NOTE_IMAGES = {
   200000: 'https://upload.wikimedia.org/wikipedia/vi/0/04/Gi%E1%BA%A5y_b%E1%BA%A1c_200.000.jpg',
   100000: 'https://upload.wikimedia.org/wikipedia/vi/a/a9/100nghins.jpg',
   50000: 'https://upload.wikimedia.org/wikipedia/vi/2/28/%C4%90%E1%BB%93ng_b%E1%BA%A1c_50.000.jpg',
-  20000: 'hhttps://upload.wikimedia.org/wikipedia/vi/f/f2/%C4%90%E1%BB%93ng_b%E1%BA%A1c_20.000.jpg',
+  20000: 'https://upload.wikimedia.org/wikipedia/vi/f/f2/%C4%90%E1%BB%93ng_b%E1%BA%A1c_20.000.jpg',
   10000: 'https://upload.wikimedia.org/wikipedia/vi/3/32/%C4%90%E1%BB%93ng_b%E1%BA%A1c_10.000_%C4%91%E1%BB%93ng.jpg',
   5000: 'https://upload.wikimedia.org/wikipedia/vi/7/7c/%C4%90%E1%BB%93ng_b%E1%BA%A1c_5000_%C4%91%E1%BB%93ng.jpg',
   2000: 'https://upload.wikimedia.org/wikipedia/vi/1/14/Gi%E1%BA%A5y_b%E1%BA%A1c_2000_%C4%91%E1%BB%93ng.jpg',
