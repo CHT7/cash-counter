@@ -10,10 +10,10 @@ Web app hỗ trợ **đếm tiền kết ca**, xử lý nhanh giao dịch phát 
 
 * **Xử lý giao dịch phát sinh**
     Hỗ trợ tính toán ngay trong lúc đang kết ca:
-    — Nhập tổng bill.
-    — Nhập số tờ khách đưa theo từng mệnh giá.
-    — Tự tính tiền thối và gợi ý mệnh giá để thối.
-    — Áp dụng giao dịch để cập nhật lại két ngay lập tức.
+    - Nhập tổng bill.
+    - Nhập số tờ khách đưa theo từng mệnh giá.
+    -  Tự tính tiền thối và gợi ý mệnh giá để thối.
+    -  Áp dụng giao dịch để cập nhật lại két ngay lập tức.
 
 * **Kết xuất dữ liệu**
     Sao chép nhanh báo cáo kết ca để gửi hoặc lưu trữ.
