@@ -1,27 +1,22 @@
-# CÔNG CỤ ĐẾM TIỀN
+# CÔNG CỤ QUẢN LÝ KÉT TIỀN
 ---
 
-Web app hỗ trợ **đếm tiền kết ca**, xử lý nhanh giao dịch phát sinh (khách đưa tiền, thối tiền, tự cập nhật lại số lượng từng mệnh giá trong két).
+Ứng dụng hỗ trợ kiểm soát dòng tiền mặt, tự động hóa việc tính toán thối tiền và cập nhật số lượng mệnh giá trong két theo thời gian thực[cite: 34, 36].
 
-### | TÍNH NĂNG CHÍNH
+### | CHỨC NĂNG CỐT LÕI
 
-* **Quản lý kho tiền**
-    Nhập số lượng tờ cho từng mệnh giá VNĐ. Hiển thị tổng tiền trong két theo thời gian thực.
-
-* **Xử lý giao dịch phát sinh**
-    Hỗ trợ tính toán ngay trong lúc đang kết ca:
-    - Nhập tổng bill.
-    - Nhập số tờ khách đưa theo từng mệnh giá.
-    -  Tự tính tiền thối và gợi ý mệnh giá để thối.
-    -  Áp dụng giao dịch để cập nhật lại két ngay lập tức.
-
-* **Kết xuất dữ liệu**
-    Sao chép nhanh báo cáo kết ca để gửi hoặc lưu trữ.
-
-### | ĐẶC ĐIỂM KỸ THUẬT
-
-* **Giao diện:** Thiết kế Mobile-first, tối ưu cho điện thoại.
-* **Trải nghiệm:** Các ô nhập liệu lớn, bo góc, dễ bấm và có nền động.
-* **Logic:** Tự động hóa việc cộng/trừ mệnh giá khi thực hiện giao dịch nhanh.
+* **Kiểm soát mệnh giá:** Theo dõi chi tiết số lượng từng tờ tiền VNĐ từ 1k đến 500k[cite: 34, 35].
+* **Xử lý giao dịch nhanh:** 
+    - Tự động tính toán số tiền cần thối dựa trên hóa đơn và tiền khách đưa[cite: 34, 36].
+    - Gợi ý chính xác các tờ tiền cần rút từ két dựa vào số lượng thực tế đang có[cite: 34, 35].
+    - Đồng bộ hóa dữ liệu: Sau khi áp dụng, hệ thống tự động cộng/trừ vào tổng kho mà không cần nhập tay lại[cite: 34, 36].
+* **Phân tích dữ liệu:** 
+    - Minh họa tỷ lệ tiền mặt qua biểu đồ động[cite: 34, 35].
+    - Hệ thống cảnh báo khi lượng tiền lẻ (1k, 2k) vượt ngưỡng cần thiết[cite: 34, 35].
+* **Nhật ký ca làm:** 
+    - Lưu trữ lịch sử các giao dịch gần nhất để đối soát khi cần[cite: 34, 35].
+* **Tương tác:** 
+    - Tích hợp bộ gõ tính toán nhanh để tối ưu cho thao tác trên di động[cite: 35, 37].
 
 ---
+*Ghi chú: Mọi dữ liệu được lưu trữ cục bộ trên thiết bị cá nhân để đảm bảo tính riêng tư.*[cite: 34]
