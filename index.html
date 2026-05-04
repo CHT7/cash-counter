@@ -4,27 +4,98 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title> Công Cụ Đếm Tiền</title>
+      <meta property="og:title" content="Công Cụ Đếm Tiền Kết Ca" />
+      <meta property="og:description" content="Hỗ trợ đếm tiền mặt, tính tiền thối và báo cáo kết ca nhanh chóng cho nhân viên cửa hàng." />
+      <meta property="og:image" content="https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=1000&auto=format&fit=crop" />
+      <meta property="og:url" content="https://cht7.github.io/cash-counter/" />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="Công Cụ Đếm Tiền Kết Ca">
+      <meta name="twitter:description" content="Đếm tiền nhanh, tính thối chuẩn, báo cáo ngay.">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
       <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       <link rel="stylesheet" href="styles.css" />
    </head>
-   <body>
+   <body style="overscroll-behavior-y: contain;">
       <div class="bg-orb orb-1"></div>
       <div class="bg-orb orb-2"></div>
       <div class="bg-orb orb-3"></div>
+      <audio id="success-sound" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3" preload="auto"></audio>
       <div class="app-shell">
          <header class="topbar card-glass">
-            <div>
-               <p class="badge">Ứng dụng đếm tiền</p>
-               <h1>Đếm Tiền Kết Ca</h1>
+            <div style="display: flex; align-items: center; gap: 12px;">
+               <button id="menu-btn" class="btn-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                     <path d="M3 12h18M3 6h18M3 18h18"/>
+                  </svg>
+               </button>
+               <div>
+                  <p class="badge">Ứng dụng đếm tiền</p>
+                  <h1>Đếm Tiền Kết Ca</h1>
+               </div>
             </div>
             <button type="button" class="btn btn-danger" id="reset-btn">Xóa dữ liệu</button>
          </header>
          <section class="summary card-glass">
-            <p>Tổng tiền hiện có trong két</p>
-            <h2 id="total-text">0đ</h2>
+            <div>
+               <p>Tổng tiền hiện có trong két</p>
+               <h2 id="total-text">0đ</h2>
+               <p id="total-word" style="font-style: italic; color: var(--primary); margin-top: 4px; font-weight: 500;"></p>
+            </div>
          </section>
+         <div id="menu-overlay" class="menu-overlay"></div>
+         <aside id="side-menu" class="side-menu card-glass hidden">
+            <div class="section-head">
+               <h3>Bảng quản lý</h3>
+               <button id="close-menu" class="btn-icon">✕</button>
+            </div>
+            <div class="menu-content">
+               <div class="menu-item calc-item">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                     <h4>Tính nhanh (Nháp)</h4>
+                     <button class="shortcut-btn" id="calc-sync-total" style="position: static; transform: none; font-size: 11px;">Lấy tổng két</button>
+                  </div>
+                  <div class="calc-screen">
+                     <div id="calc-history" style="font-size: 12px; opacity: 0.6; text-align: right; min-height: 18px;"></div>
+                     <div id="calc-display" style="font-size: 24px; font-weight: 800; text-align: right; overflow: hidden;">0</div>
+                  </div>
+                  <div class="calc-buttons">
+                     <button class="btn-calc" data-val="C">C</button>
+                     <button class="btn-calc" data-val="/">÷</button>
+                     <button class="btn-calc" data-val="*">×</button>
+                     <button class="btn-calc" data-val="DEL">⌫</button>
+                     <button class="btn-calc" data-val="7">7</button>
+                     <button class="btn-calc" data-val="8">8</button>
+                     <button class="btn-calc" data-val="9">9</button>
+                     <button class="btn-calc" data-val="-">-</button>
+                     <button class="btn-calc" data-val="4">4</button>
+                     <button class="btn-calc" data-val="5">5</button>
+                     <button class="btn-calc" data-val="6">6</button>
+                     <button class="btn-calc" data-val="+">+</button>
+                     <button class="btn-calc" data-val="1">1</button>
+                     <button class="btn-calc" data-val="2">2</button>
+                     <button class="btn-calc" data-val="3">3</button>
+                     <button class="btn-calc" data-val="=" style="grid-row: span 2; background: var(--primary);">=</button>
+                     <button class="btn-calc" data-val="0" style="grid-column: span 2;">0</button>
+                     <button class="btn-calc" data-val="000">.000</button>
+                  </div>
+               </div>
+               <div class="menu-item">
+                  <h4>Biểu đồ phân bổ</h4>
+                  <div class="chart-container">
+                     <canvas id="denomChart"></canvas>
+                  </div>
+                  <div id="denom-warning" class="warning-text hidden">⚠️ Tiền lẻ (1k, 2k) đang quá nhiều!</div>
+               </div>
+               <div class="menu-item">
+                  <h4>Lịch sử trong ca</h4>
+                  <div id="transaction-logs" class="logs-container">
+                     <p class="empty-msg">Chưa có giao dịch nào.</p>
+                  </div>
+               </div>
+            </div>
+         </aside>
          <section class="card-glass">
             <div class="section-head">
                <h3>Mệnh giá tiền mặt</h3>
@@ -39,7 +110,10 @@
             </div>
             <div class="form-row">
                <label for="bill-amount">Tổng bill (đ)</label>
-               <input id="bill-amount" type="number" min="0" step="1000" placeholder="Ví dụ: 11000" />
+               <div class="input-with-shortcut">
+                  <input id="bill-amount" type="number" min="0" step="1000" placeholder="Ví dụ: 11000" />
+                  <button type="button" class="shortcut-btn" id="add-000-btn">.000</button>
+               </div>
             </div>
             <div class="section-head mini-head">
                <h4>Khách đưa theo mệnh giá</h4>
@@ -60,6 +134,19 @@
             <button type="button" class="btn btn-ghost" id="copy-btn">Sao chép báo cáo kết ca</button>
          </footer>
       </div>
+      <div id="confirm-modal" class="menu-overlay">
+         <div class="card-glass confirm-content">
+            <h3>Xác nhận xóa?</h3>
+            <p style="margin: 15px 0; opacity: 0.8; font-size: 14px;">
+               Tất cả dữ liệu đếm tiền và lịch sử trong ca sẽ bị xóa sạch. Bạn không thể hoàn tác hành động này.
+            </p>
+            <div class="action-row">
+               <button type="button" class="btn btn-secondary" id="cancel-reset">Hủy</button>
+               <button type="button" class="btn btn-danger" id="confirm-reset" style="flex: 2;">Đúng, xóa hết đi!</button>
+            </div>
+         </div>
+      </div>
       <script src="app.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    </body>
 </html>
