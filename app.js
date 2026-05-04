@@ -179,8 +179,8 @@ function loadState() {
    if (!saved) return;
    try {
       const state = JSON.parse(saved);
-      Object.assign(counts, state.counts);
-      Object.assign(paymentCounts, state.paymentCounts);
+      Object.assign(counts, state.counts || {});
+      Object.assign(paymentCounts, state.paymentCounts || {});
 
       DENOMS.forEach(denom => {
          const cashInp = document.getElementById(`cash-${denom}`);
@@ -196,23 +196,27 @@ function loadState() {
 }
 
 function renderGrids() {
-   DENOMS.forEach((denom) => {
-      counts[denom] = 0;
-      paymentCounts[denom] = 0;
-      cashGrid.appendChild(createDenomCard(denom, updateCashCount, 'cash'));
-      paymentGrid.appendChild(createDenomCard(denom, updatePaymentCount, 'pay'));
-   });
+  cashGrid.innerHTML = '';
+  paymentGrid.innerHTML = '';
+  DENOMS.forEach((denom) => {
+    counts[denom] = 0;
+    paymentCounts[denom] = 0;
+    cashGrid.appendChild(createDenomCard(denom, updateCashCount, 'cash'));
+    paymentGrid.appendChild(createDenomCard(denom, updatePaymentCount, 'pay'));
+  });
 }
 
 function updateCashCount(denom, value) {
    counts[denom] = Math.max(0, Number.parseInt(value, 10) || 0);
    calcTotal();
    calculateTransaction();
+   saveState();
 }
 
 function updatePaymentCount(denom, value) {
    paymentCounts[denom] = Math.max(0, Number.parseInt(value, 10) || 0);
    calculateTransaction();
+   saveState();
 }
 
 function calculateTransaction() {
