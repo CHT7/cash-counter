@@ -1,15 +1,15 @@
 const DENOMS = [500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000];
 
 const NOTE_IMAGES = {
-  500000: 'https://upload.wikimedia.org/wikipedia/vi/9/9f/500000_polymer.jpg',
-  200000: 'https://upload.wikimedia.org/wikipedia/vi/0/04/Gi%E1%BA%A5y_b%E1%BA%A1c_200.000.jpg',
-  100000: 'https://upload.wikimedia.org/wikipedia/vi/a/a9/100nghins.jpg',
-  50000: 'https://upload.wikimedia.org/wikipedia/vi/2/28/%C4%90%E1%BB%93ng_b%E1%BA%A1c_50.000.jpg',
-  20000: 'https://upload.wikimedia.org/wikipedia/vi/f/f2/%C4%90%E1%BB%93ng_b%E1%BA%A1c_20.000.jpg',
-  10000: 'https://upload.wikimedia.org/wikipedia/vi/3/32/%C4%90%E1%BB%93ng_b%E1%BA%A1c_10.000_%C4%91%E1%BB%93ng.jpg',
-  5000: 'https://upload.wikimedia.org/wikipedia/vi/7/7c/%C4%90%E1%BB%93ng_b%E1%BA%A1c_5000_%C4%91%E1%BB%93ng.jpg',
-  2000: 'https://upload.wikimedia.org/wikipedia/vi/1/14/Gi%E1%BA%A5y_b%E1%BA%A1c_2000_%C4%91%E1%BB%93ng.jpg',
-  1000: 'https://upload.wikimedia.org/wikipedia/vi/9/9f/%C4%90%E1%BB%93ng_b%E1%BA%A1c_1000_%C4%91%E1%BB%93ng.jpeg'
+  500000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/500.jpg',
+  200000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/200.jpg',
+  100000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/100.jpg',
+  50000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/50.jpg',
+  20000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/20.jpg',
+  10000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/10.jpg',
+  5000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/5.jpg',
+  2000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/2.jpg',
+  1000: 'https://raw.githubusercontent.com/CHT7/cash-counter/refs/heads/main/Assets/Money/1.jpg'
 };
 
 const counts = {};
