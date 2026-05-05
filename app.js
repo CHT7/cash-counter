@@ -1,15 +1,15 @@
 const DENOMS = [500000, 200000, 100000, 50000, 20000, 10000, 5000, 2000, 1000];
 
 const NOTE_IMAGES = {
-   500000: 'https://en.numista.com/catalogue/photos/viet_nam/65ca1a3c37c767.33491922-original.jpg',
-   200000: 'https://en.numista.com/catalogue/photos/viet_nam/5e9ceba72ab570.69167788-original.jpg',
-   100000: 'https://en.numista.com/catalogue/photos/viet_nam/64f38ae1a90dc4.91546703-original.jpg',
-   50000: 'https://en.numista.com/catalogue/photos/viet_nam/5e9e97d1456249.52677947-original.jpg',
-   20000: 'https://en.numista.com/catalogue/photos/viet_nam/63fdf045478aa8.79782893-original.jpg',
-   10000: 'https://en.numista.com/catalogue/photos/viet_nam/629a30e8e84ca4.62721942-original.jpg',
-   5000: 'https://en.numista.com/catalogue/photos/viet_nam/626b8803cc0d90.08806464-original.jpg',
-   2000: 'https://en.numista.com/catalogue/photos/viet_nam/626b87e6254884.34599868-original.jpg',
-   1000: 'https://en.numista.com/catalogue/photos/viet_nam/626b8a28cd1456.57945404-original.jpg'
+  500000: 'https://upload.wikimedia.org/wikipedia/vi/9/9f/500000_polymer.jpg',
+  200000: 'https://upload.wikimedia.org/wikipedia/vi/0/04/Gi%E1%BA%A5y_b%E1%BA%A1c_200.000.jpg',
+  100000: 'https://upload.wikimedia.org/wikipedia/vi/a/a9/100nghins.jpg',
+  50000: 'https://upload.wikimedia.org/wikipedia/vi/2/28/%C4%90%E1%BB%93ng_b%E1%BA%A1c_50.000.jpg',
+  20000: 'hhttps://upload.wikimedia.org/wikipedia/vi/f/f2/%C4%90%E1%BB%93ng_b%E1%BA%A1c_20.000.jpg',
+  10000: 'https://upload.wikimedia.org/wikipedia/vi/3/32/%C4%90%E1%BB%93ng_b%E1%BA%A1c_10.000_%C4%91%E1%BB%93ng.jpg',
+  5000: 'https://upload.wikimedia.org/wikipedia/vi/7/7c/%C4%90%E1%BB%93ng_b%E1%BA%A1c_5000_%C4%91%E1%BB%93ng.jpg',
+  2000: 'https://upload.wikimedia.org/wikipedia/vi/1/14/Gi%E1%BA%A5y_b%E1%BA%A1c_2000_%C4%91%E1%BB%93ng.jpg',
+  1000: 'https://upload.wikimedia.org/wikipedia/vi/9/9f/%C4%90%E1%BB%93ng_b%E1%BA%A1c_1000_%C4%91%E1%BB%93ng.jpeg'
 };
 
 const counts = {};
